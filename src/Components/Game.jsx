@@ -1,44 +1,49 @@
-import Question from "./Question";
-import React, {useEffect} from "react";
-import {nanoid} from "nanoid";
+import Question from './Question';
+import React, { useEffect } from 'react';
+import { nanoid } from 'nanoid';
 
-export default function Game() {
-
+export default function Game ({
+    selectedDifficulty,
+    selectedType
+}) {
     const [questions, setQuestions] = React.useState([]);
     const [gameFinished, setGameFinished] = React.useState(false);
     const [correctAnswers, setCorrectAnswers] = React.useState(0);
-    const [restartGame,setRestartGame] = React.useState(false);
+    const [restartGame, setRestartGame] = React.useState(false);
 
     useEffect(() => {
-        fetch('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy')
+        fetch('https://opentdb.com/api.php?amount=5', {
+            params: {
+                difficulty: selectedDifficulty,
+                type: selectedType === 'allQuestionTypes' ? '' : selectedType
+            }
+        })
             .then(res => res.json())
             .then(data => data.results.map(question => ({
                 id: nanoid(),
                 question: question.question,
                 answers: [...question.incorrect_answers, question.correct_answer].map(answer => ({
-                    answer: answer,
+                    answer,
                     isCorrect: answer === question.correct_answer,
                     isSelected: false,
                     id: nanoid()
                 })).sort(() => Math.random() - 0.5)
             })))
-            .then(questions => setQuestions(questions))
-            .then(console.log("api called"));
+            .then(questions => setQuestions(questions));
     }, [restartGame]);
 
-    function checkAnswers() {
+    function checkAnswers () {
         let correctAnswers = 0;
         questions.forEach(question => {
-                question.answers.forEach(answer => {
-                    if (answer.isCorrect && answer.isSelected) correctAnswers++;
-                });
-            }
-        );
+            question.answers.forEach(answer => {
+                if (answer.isCorrect && answer.isSelected) correctAnswers++;
+            });
+        });
         setCorrectAnswers(correctAnswers);
         setGameFinished(true);
     }
 
-    function toggleSelected(questionID, answerID) {
+    function toggleSelected (questionID, answerID) {
         const newQuestions = questions.map(question => {
             if (question.id === questionID) {
                 question.answers = question.answers.map(answer => {
@@ -51,7 +56,7 @@ export default function Game() {
         setQuestions(newQuestions);
     }
 
-    function generateQuestions() {
+    function generateQuestions () {
         return questions.map(question => {
             return <Question
                 question={question.question}
@@ -64,31 +69,25 @@ export default function Game() {
         });
     }
 
-
-    function toggleRestartGame() {
+    function toggleRestartGame () {
         setRestartGame(true);
         setGameFinished(false);
     }
 
-    return (
-        <div className="game">
-            {generateQuestions()}
-            <div className="footer">
-                {gameFinished ?
-                    <>
-                        <span>You have answered {correctAnswers}/5 correctly</span>
-                        <button
-                            className="submit-button"
-                            onClick={toggleRestartGame}
-                        >Restart game</button>
-                    </>
-                    : <button
+    return (<div className="game">
+        {generateQuestions()}
+        <div className="footer">
+            {gameFinished
+                ? <>
+                    <span>You have answered {correctAnswers}/5 correctly</span>
+                    <button
                         className="submit-button"
-                        onClick={checkAnswers}>
-                        Check Answers
-                    </button>}
+                        onClick={toggleRestartGame}
+                    >Restart game
+                    </button>
+                </>
+                : <button className="submit-button" onClick={checkAnswers}>Check Answers</button>}
 
-            </div>
         </div>
-    );
+    </div>);
 }
