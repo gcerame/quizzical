@@ -22,7 +22,8 @@ export default function Game() {
                     id: nanoid()
                 })).sort(() => Math.random() - 0.5)
             })))
-            .then(questions => setQuestions(questions));
+            .then(questions => setQuestions(questions))
+            .then(console.log("api called"));
     }, [restartGame]);
 
     function checkAnswers() {
@@ -66,6 +67,7 @@ export default function Game() {
 
     function toggleRestartGame() {
         setRestartGame(true);
+        setGameFinished(false);
     }
 
     return (
