@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Answer(props) {
     let style = {
-        backgroundColor: props.isSelected ? "green" : "#F5F7FB",
+        backgroundColor: props.isSelected ? "#D6DBF5" : "#F5F7FB",
     };
     if (props.gameFinished) {
         if (props.isSelected && props.isCorrect) {
