@@ -17,6 +17,8 @@ export default function Question(props) {
                 toggleSelected={props.toggleSelected}
                 id={answer.id}
                 questionID={props.questionID}
+                isCorrect={answer.isCorrect}
+                gameFinished={props.gameFinished}
             />);
     }
 

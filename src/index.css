@@ -1,52 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
 
-.App{
-  justify-content: center;
-  align-items: center;
-  font-family: 'Karla', sans-serif;
-  text-align: center;
+.App {
+    justify-content: center;
+    align-items: center;
+    font-family: 'Karla', sans-serif;
+    text-align: center;
 }
-.question{
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
+
+.question {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
 
 }
-.question--title{
-  align-self: flex-start;
-  font-family: 'Karla';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  color: #293264;
+
+.question--title {
+    align-self: flex-start;
+    font-family: 'Karla',sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #293264;
+    text-align: left;
 }
-.game{
-  display: flex;
-  flex-direction: column;
-  text-justify: auto;
+
+.game {
+    display: flex;
+    flex-direction: column;
+    text-justify: auto;
+    padding: 15px 20px;
 }
-.answers{
-  display: flex;
-  justify-content: space-around;
+
+.answers {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 90%;
 
 }
-.answer{
-  background: #F5F7FB;
-  padding: 10px;
-  border: 0.794239px solid #4D5B9E;
-  border-radius: 7.94239px;
 
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10.24px;
-  line-height: 12px;
-  text-align: center;
-  color: #293264;
+.answer {
+    background: #F5F7FB;
+    padding: 5px 20px;
+    border: 0.794239px solid #4D5B9E;
+    border-radius: 7.94239px;
+
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10.24px;
+    line-height: 12px;
+    text-align: center;
+    color: #293264;
 
 }
-.answer-selected{
-  background: #D6DBF5;
+
+.answer-selected {
+    background: #D6DBF5;
+}
+.submit-button{
+    background: #4D5B9E;
+    border-radius: 10px;
+    border: 1px solid #4D5B9E;
+    padding: 10px;
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    width: fit-content;
+    color: #F5F7FB;
+}
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
 }

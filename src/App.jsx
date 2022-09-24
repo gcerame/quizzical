@@ -4,11 +4,12 @@ import React from "react";
 import {useState} from "react";
 
 export default function App() {
-    const [gameStarted, setGameStarted] = React.useState(true);
+    const [showStartScreen, setShowStartScreen] = React.useState(true);
+    const toggleStartScreen = () => setShowStartScreen(!showStartScreen);
 
     return (
         <div className="App">
-            {gameStarted ? <Game/> : <StartScreen/>}
+            {showStartScreen ? <StartScreen toggleStartScreen={toggleStartScreen}/> : <Game/>}
         </div>
     );
 }

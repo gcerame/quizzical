@@ -5,9 +5,12 @@ import {nanoid} from "nanoid";
 export default function Game() {
 
     const [questions, setQuestions] = React.useState([]);
+    const [gameFinished, setGameFinished] = React.useState(false);
+    const [correctAnswers, setCorrectAnswers] = React.useState(0);
+    const [restartGame,setRestartGame] = React.useState(false);
 
     useEffect(() => {
-        fetch('https://opentdb.com/api.php?amount=5&difficulty=medium&type=multiple')
+        fetch('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy')
             .then(res => res.json())
             .then(data => data.results.map(question => ({
                 id: nanoid(),
@@ -17,24 +20,28 @@ export default function Game() {
                     isCorrect: answer === question.correct_answer,
                     isSelected: false,
                     id: nanoid()
-                }))
+                })).sort(() => Math.random() - 0.5)
             })))
             .then(questions => setQuestions(questions));
-    }, []);
+    }, [restartGame]);
 
-    function toggleSelected (questionID, answerID) {
+    function checkAnswers() {
+        let correctAnswers = 0;
+        questions.forEach(question => {
+                question.answers.forEach(answer => {
+                    if (answer.isCorrect && answer.isSelected) correctAnswers++;
+                });
+            }
+        );
+        setCorrectAnswers(correctAnswers);
+        setGameFinished(true);
+    }
+
+    function toggleSelected(questionID, answerID) {
         const newQuestions = questions.map(question => {
             if (question.id === questionID) {
-                //Unselect all answers
                 question.answers = question.answers.map(answer => {
-                    answer.isSelected = false;
-                    return answer;
-                });
-                //Toggle the answer that was clicked
-                question.answers = question.answers.map(answer => {
-                    if (answer.id === answerID) {
-                        answer.isSelected = !answer.isSelected;
-                    }
+                    answer.isSelected = answer.id === answerID ? !answer.isSelected : false;
                     return answer;
                 });
             }
@@ -51,20 +58,35 @@ export default function Game() {
                 key={question.id}
                 questionID={question.id}
                 toggleSelected={toggleSelected}
+                gameFinished={gameFinished}
             />;
         });
     }
 
-    function checkAnswers() {
-        console.log(questions[1].answers);
+
+    function toggleRestartGame() {
+        setRestartGame(true);
     }
 
     return (
         <div className="game">
             {generateQuestions()}
-            <button onClick={checkAnswers}>
-                Check Answers
-            </button>
+            <div className="footer">
+                {gameFinished ?
+                    <>
+                        <span>You have answered {correctAnswers}/5 correctly</span>
+                        <button
+                            className="submit-button"
+                            onClick={toggleRestartGame}
+                        >Restart game</button>
+                    </>
+                    : <button
+                        className="submit-button"
+                        onClick={checkAnswers}>
+                        Check Answers
+                    </button>}
+
+            </div>
         </div>
     );
 }
