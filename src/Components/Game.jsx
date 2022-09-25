@@ -1,7 +1,7 @@
 import Question from './Question';
 import React, { useEffect } from 'react';
 import { nanoid } from 'nanoid';
-
+import Confetti from 'react-confetti';
 export default function Game ({
     selectedDifficulty,
     selectedType,
@@ -42,6 +42,7 @@ export default function Game ({
         });
         setCorrectAnswers(correctAnswers);
         setGameFinished(true);
+        console.log(correctAnswers);
     }
 
     function toggleSelected (questionID, answerID) {
@@ -86,6 +87,7 @@ export default function Game ({
                         onClick={toggleRestartGame}
                     >Restart game
                     </button>
+                    {correctAnswers >= 3 ? <Confetti/> : null}
                 </>
                 : <>
                     <button className="submit-button" onClick={checkAnswers}>Check Answers</button>
