@@ -9,8 +9,8 @@ export default function StartScreen ({
 }) {
     return (
         <div className="start-screen">
-            <h2>Quizzical</h2>
-            <p>Some description if needed</p>
+            <h1 className="start-screen--title">Quizzical</h1>
+            <span className="start-screen--description">🤓</span>
             <Select
                 className="select"
                 options={[

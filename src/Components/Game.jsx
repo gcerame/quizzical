@@ -4,7 +4,8 @@ import { nanoid } from 'nanoid';
 
 export default function Game ({
     selectedDifficulty,
-    selectedType
+    selectedType,
+    toggleStartScreen
 }) {
     const [questions, setQuestions] = React.useState([]);
     const [gameFinished, setGameFinished] = React.useState(false);
@@ -86,7 +87,11 @@ export default function Game ({
                     >Restart game
                     </button>
                 </>
-                : <button className="submit-button" onClick={checkAnswers}>Check Answers</button>}
+                : <>
+                    <button className="submit-button" onClick={checkAnswers}>Check Answers</button>
+                    <button className="submit-button" onClick={toggleStartScreen}>Back to start</button>
+                </>
+            }
 
         </div>
     </div>);
