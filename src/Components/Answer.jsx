@@ -1,23 +1,23 @@
 import React from 'react';
 
-export default function Answer (props) {
+export default function Answer ({ gameFinished, isCorrect, isSelected, answer, toggleSelected, id, questionID }) {
     let style = {
-        backgroundColor: props.isSelected ? '#D6DBF5' : '#F5F7FB'
+        backgroundColor: isSelected ? '#D6DBF5' : '#F5F7FB'
     };
 
-    if (props.gameFinished) {
-        if (props.isSelected && props.isCorrect) {
+    if (gameFinished) {
+        if (isSelected && isCorrect) {
             style = { backgroundColor: '#94D7A2', color: '#293264' };
-        } else if (props.isSelected && props.isCorrect === false) {
+        } else if (isSelected && isCorrect === false) {
             style = { backgroundColor: '#F8BCBC', opacity: '100%', color: '#293264' };
-        } else if (props.isCorrect) {
+        } else if (isCorrect) {
             style = {
                 backgroundColor: '#94D7A2',
                 color: 'var(--focused-btn-color)',
                 opacity: '50%',
                 border: 'none'
             };
-        } else if (props.isCorrect === false) {
+        } else if (isCorrect === false) {
             style = { opacity: '50%' };
         }
     }
@@ -25,8 +25,8 @@ export default function Answer (props) {
         className="answer"
         style={style}
         onClick={() => {
-            if (!props.gameFinished) props.toggleSelected(props.questionID, props.id);
+            if (!gameFinished) toggleSelected(questionID, id);
         }}>
-        <span>{props.answer}</span>
+        <span>{answer}</span>
     </div>;
 };
